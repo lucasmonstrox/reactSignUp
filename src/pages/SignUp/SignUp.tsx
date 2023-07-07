@@ -15,7 +15,7 @@ import { validationSchema } from './consts/validationSchema';
 import { signUpRepository } from './repositories/signUp';
 
 export const SignUpPage = () => {
-  const [formStatus, setFormStatus] = useState(FormStatus.Initial);
+  const [formStatus, setFormStatus] = useState<FormStatus>(FormStatus.Initial);
   const mutation = useMutation(signUpRepository, {
     onError: () => {
       setFormStatus(FormStatus.Error);
