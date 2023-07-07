@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
+import { StatusCodes } from 'http-status-codes';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { FormStatus, SignUpInput } from './types';
@@ -21,12 +22,12 @@ export const SignUpPage = () => {
       setFormStatus(FormStatus.Error);
     },
     onSuccess: (data) => {
-      const hasFormErrors = data.status === 400;
+      const hasFormErrors = data.status === StatusCodes.BAD_REQUEST;
       if (hasFormErrors) {
         setFormStatus(FormStatus.EmailAlreadyTaken);
         return;
       }
-      const hasServerError = data.status !== 204;
+      const hasServerError = data.status !== StatusCodes.NO_CONTENT;
       if (hasServerError) {
         setFormStatus(FormStatus.Error);
         return;
