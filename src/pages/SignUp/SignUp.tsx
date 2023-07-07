@@ -11,32 +11,29 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { FormStatus, SignUpInput } from './types';
 import { validationSchema } from './consts/validationSchema';
+import { signUpRepository } from './repositories/signUp';
 
 export const SignUpPage = () => {
   const [formStatus, setFormStatus] = useState(FormStatus.Initial);
   // @ts-ignore
-  const mutation = useMutation(
-    (formData) =>
-      fetch('/signUp', { method: 'POST', body: JSON.stringify(formData) }),
-    {
-      onError: () => {
+  const mutation = useMutation(signUpRepository, {
+    onError: () => {
+      setFormStatus(FormStatus.Error);
+    },
+    onSuccess: (data) => {
+      const hasFormErrors = data.status === 400;
+      if (hasFormErrors) {
+        setFormStatus(FormStatus.EmailAlreadyTaken);
+        return;
+      }
+      const hasServerError = data.status !== 204;
+      if (hasServerError) {
         setFormStatus(FormStatus.Error);
-      },
-      onSuccess: (data) => {
-        const hasFormErrors = data.status === 400;
-        if (hasFormErrors) {
-          setFormStatus(FormStatus.EmailAlreadyTaken);
-          return;
-        }
-        const hasServerError = data.status !== 204;
-        if (hasServerError) {
-          setFormStatus(FormStatus.Error);
-          return;
-        }
-        setFormStatus(FormStatus.Success);
-      },
-    }
-  );
+        return;
+      }
+      setFormStatus(FormStatus.Success);
+    },
+  });
   const formik = useFormik<SignUpInput>({
     initialValues: {
       firstName: '',
