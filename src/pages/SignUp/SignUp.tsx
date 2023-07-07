@@ -61,7 +61,7 @@ export const SignUpPage = () => {
       [FormStatus.Success]: 'A sua conta foi criada com sucesso',
     };
     return (
-      <Alert severity={severity} data-testid='alertMessage'>
+      <Alert severity={severity} data-testid='messageAlert'>
         {message[formStatus]}
       </Alert>
     );
@@ -80,7 +80,7 @@ export const SignUpPage = () => {
               helperText={formik.errors?.firstName}
               inputProps={{ maxlength: 9 }}
               value={formik.values.firstName}
-              data-testid='firstName'
+              data-testid='firstNameInput'
               onChange={formik.handleChange}
             />
             <TextField
@@ -91,7 +91,7 @@ export const SignUpPage = () => {
               helperText={formik.errors?.lastName}
               inputProps={{ maxlength: 9 }}
               value={formik.values.lastName}
-              data-testid='lastName'
+              data-testid='lastNameInput'
               onChange={formik.handleChange}
             />
           </Stack>
@@ -101,7 +101,7 @@ export const SignUpPage = () => {
             error={!!formik.errors?.email}
             helperText={formik.errors?.email}
             value={formik.values.email}
-            data-testid='email'
+            data-testid='emailInput'
             onChange={formik.handleChange}
           />
           <TextField
@@ -111,13 +111,13 @@ export const SignUpPage = () => {
             error={!!formik.errors?.password}
             helperText={formik.errors?.password}
             value={formik.values.password}
-            data-testid='password'
+            data-testid='passwordInput'
             onChange={formik.handleChange}
           />
           <Button
             type='submit'
             disabled={mutation.isLoading}
-            data-testid='signUp'
+            data-testid='signUpButton'
           >
             Sign Up
           </Button>
