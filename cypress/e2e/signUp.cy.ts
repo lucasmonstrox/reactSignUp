@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes';
+
 describe('template spec', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -38,7 +40,7 @@ describe('template spec', () => {
   });
 
   it('should appear message of email already taken', () => {
-    cy.intercept('/signUp', { statusCode: 400 });
+    cy.intercept('/signUp', { statusCode: StatusCodes.BAD_REQUEST });
     cy.get('[data-testid="firstName"]').type('João');
     cy.get('[data-testid="lastName"]').type('Silva');
     cy.get('[data-testid="email"]').type('joao@gmail.com');
@@ -50,7 +52,7 @@ describe('template spec', () => {
   });
 
   it('should appear message of server error', () => {
-    cy.intercept('/signUp', { statusCode: 500 });
+    cy.intercept('/signUp', { statusCode: StatusCodes.INTERNAL_SERVER_ERROR });
     cy.get('[data-testid="firstName"]').type('João');
     cy.get('[data-testid="lastName"]').type('Silva');
     cy.get('[data-testid="email"]').type('joao@gmail.com');
@@ -62,7 +64,7 @@ describe('template spec', () => {
   });
 
   it('should sign up', () => {
-    cy.intercept('/signUp', { statusCode: 204 });
+    cy.intercept('/signUp', { statusCode: StatusCodes.NO_CONTENT });
     cy.get('[data-testid="firstName"]').type('João');
     cy.get('[data-testid="lastName"]').type('Silva');
     cy.get('[data-testid="email"]').type('joao@gmail.com');
