@@ -9,15 +9,8 @@ import {
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { SignUpInput } from './types';
+import { FormStatus, SignUpInput } from './types';
 import { validationSchema } from './consts/validationSchema';
-
-enum FormStatus {
-  Initial,
-  EmailAlreadyTaken,
-  Success,
-  Error,
-}
 
 export const SignUpPage = () => {
   const [formStatus, setFormStatus] = useState(FormStatus.Initial);
