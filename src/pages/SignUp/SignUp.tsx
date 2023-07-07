@@ -16,7 +16,6 @@ import { signUpRepository } from './repositories/signUp';
 
 export const SignUpPage = () => {
   const [formStatus, setFormStatus] = useState(FormStatus.Initial);
-  // @ts-ignore
   const mutation = useMutation(signUpRepository, {
     onError: () => {
       setFormStatus(FormStatus.Error);
@@ -44,7 +43,6 @@ export const SignUpPage = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      // @ts-ignore
       mutation.mutate(values);
     },
   });
@@ -62,7 +60,6 @@ export const SignUpPage = () => {
       [FormStatus.Error]: 'Ocorreu um erro inesperado',
       [FormStatus.Success]: 'A sua conta foi criada com sucesso',
     };
-    // @ts-ignore
     return (
       <Alert severity={severity} data-testid='alertMessage'>
         {message[formStatus]}
